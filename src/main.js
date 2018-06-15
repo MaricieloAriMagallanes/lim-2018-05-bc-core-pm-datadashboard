@@ -11,7 +11,7 @@ output.selectedIndex = 0;
 
 //Aqui aplicamos el fetch 
 
-fetch('http://127.0.0.1:5500/data/cohorts.json')
+fetch('../data/cohorts.json')
 
   .then(
     function(cohorts) {
@@ -41,7 +41,7 @@ fetch('http://127.0.0.1:5500/data/cohorts.json')
     console.log(x);
     if(x === "lim-2018-03-pre-core-pw")
     {
-      fetch('http://127.0.0.1:5500/data/cohorts/lim-2018-03-pre-core-pw/users.json')
+      fetch('../data/cohorts/lim-2018-03-pre-core-pw/users.json')
       .then(function(users) {
         return users.json();
       })
