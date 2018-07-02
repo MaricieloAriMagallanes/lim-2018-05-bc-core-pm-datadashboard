@@ -11,5 +11,5 @@ window.filterUsers=(users,search)=>{
 }
 window.processCohortData=(options)=>{
     options={cohort:"cohort{};",cohortData:"users,progress",orderBy:"",orderDirection:"",search:""};
-
+  
 }
