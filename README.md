@@ -46,11 +46,14 @@ información y controles más relevantes, en este caso, del vehículo que está
 utilizando. El _dashboard_ de un auto le permite a quien conduce saber a qué
 velocidad está yendo, qué cambio/velocidad está utilizando, cuánto combustible
 tiene disponible, cuál es la temperatura del motor, cuántas revoluciones por
+![foto de figma](/src/img/logo1.jpg)
 minuto dan las ruedas, cuánta distancia ha recorrido, etc.
 
 ![car dashboard](https://img.buzzfeed.com/buzzfeed-static/static/2017-02/7/12/enhanced/buzzfeed-prod-fastlane-03/original-17515-1486490056-3.jpg?crop=2041:1068;80,248)
 
 ## Aplicaciones en el mundo real
+
+
 
 En el mundo de la web es muy común el uso de _dashboards_. De hecho, [wikipedia](https://goo.gl/P7PF4y)
 nos dice que un _dashboard_ puede ser un resumen gráfico de varias piezas de
