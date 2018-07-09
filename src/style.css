@@ -128,64 +128,6 @@
         align-items: center;
         justify-content: space-between;
     }
-    .dataContainer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    .searchsort {
-        width: 100%;
-        box-shadow: none;
-        color: rgba(0, 0, 0, 0.87);
-        top: 128px;
-        left: auto;
-        right: 0;
-        position: fixed;
-        display: flex;
-        z-index: 1100;
-        box-sizing: border-box;
-		flex-shrink: 0;
-		height: 30px;
-		background: #fff;
-    }
-    .searchContainer {
-        width: 70%;
-        margin: 0.5% 0.3% 0.5% 0.3%;
-        background-color: #fafafa;
-    }
-    .searchContainer form input {
-        width: 90%;
-        border: none;
-        background-color: #fafafa;
-    }
-    .searchContainer form a {
-        width: 6%;
-        cursor: pointer;
-    }
-    .sortContainer {
-        width: 30%;
-        margin: 0.5% 0.3% 0.5% 0.3%;
-        background-color: #56f89a;
-    }
-    .sortContainer select {
-        width: 100%;
-        border: none;
-        background-color: #56f89a;
-    }
-    .studentsContainer {
-        width: 85%;
-    }
-    .container {
-        margin: 5%;
-        padding: 3%;
-        background-color: #fafafa;
-        width: 100%;
-        border: 0.5px solid #666666;
-    }
-
-
-
-
     .userInformation {
       padding: 24px 16px;
       background-color: #fafafa;
@@ -270,6 +212,19 @@
       vertical-align: middle;
       -moz-appearance: none;
       -moz-user-select: none;
+  }
+  #myInput {
+    background-image: url('/src/img/searchicon3.png');
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-color: beige;
+    width: 40%;
+    font-size: 16px;
+    padding: 6px 20px 15px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    margin-top: 1%;
+    border-radius: 20px;
   }
   .itemContainer:hover,
   .venueContainer:hover,

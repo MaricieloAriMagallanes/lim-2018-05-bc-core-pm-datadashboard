@@ -15,8 +15,10 @@ const sede = document.getElementById("sede");
 const year = document.getElementById("year");
 const cohort = document.getElementById("cohort");
 const users = document.getElementById('name');
+const filterUser = document.getElementById('myInput');
 let userId = '';
 let userName = '';
+let cmb='';
 //Realizamos la tabla // tb=tabla
 let tb = '';
 tb += '<tr>';
@@ -32,14 +34,15 @@ sede.addEventListener("change", () => {
   fetch('../data/cohorts.json')
     .then((cohorts) => cohorts.json())
     .then((myDataCohorts) => {
+      cmb= '' ;
       myDataCohorts.forEach(users => {
         const cohortsIds = users.id;
         const splitCohort = cohortsIds.split('-');
         if (splitCohort[0] === sede.value) {
-          tb += '<option value="' + cohortsIds + '">' + cohortsIds + '</option>';
+        cmb += '<option value="' + cohortsIds + '">' + cohortsIds + '</option>';
         }
       });
-      cohort.innerHTML = tb;
+      cohort.innerHTML = cmb;
     })
 })
 //
@@ -50,9 +53,10 @@ cohort.addEventListener('change', () => {
       fetch('../data/cohorts/' + cohort.value + '/progress.json')
         .then((response) => response.json())
         .then((myDataProgress) => {
-          // const usersWithStats = computeUserStqr(myUsers, myDataProgress, courses)
+          // const usersWithStats = computeUserStqr(myUsers, myDataProgress, courses
           for (let value of myUsers) {  // for (let value of myUsers)
             if (value.role === "student") { // if (value.role .... )
+             
               tb += '<tr>';
               tb += '<td id= "nombrestabla">' + value.name + '</td>';
               if (myDataProgress.hasOwnProperty(value.id)) {
@@ -69,15 +73,14 @@ cohort.addEventListener('change', () => {
                   let exTotal = 0;
                   let exCompleted = 0;
                   let completedReads = 0;
-                  let totalQuiz =0;
+                  let quizTotal =0;
                   let quizCompleted=0;
                   
                   Object.values(userCourseProgress.units).forEach((unit) => {
                     //console.log(unit.percent);
                     percentUnits += unit.percent;
                     units++;
-                    // for (let part of Object.values(unit.parts)) {
-                      
+                    // for (let part of Object.values(unit.parts)) {                    
                     for (let part of Object.values(unit.parts)){
                       //console.log(part);
                       if (part.type === 'read') { 
@@ -85,61 +88,36 @@ cohort.addEventListener('change', () => {
                         
                         if (part.completed === 1){
                           completedReads++;
-                        }
-                        
-                        
-                      }
-                      
+                        }                      
+                      }                   
                       if (part.hasOwnProperty('exercises')) {
                         for (let ex of Object.values(part.exercises)){
-                          exTotal++
+                          exTotal++;
                         exCompleted = exCompleted + ex.completed
                           //exCompleted += ex.completed
                           //exTotal ++;
                         // console.log(exTotal)
                         }
                       }
-
-                      if(part.hasOwnProperty('quiz'))
-                      for (let quiz of Object.values(part.quiz)){
-                        if (quiz.type === 'quiz') { 
-                          totalQuiz++;
-                          quizCompleted= quizCompleted + quiz.completed
+                      if (part.type === 'quiz') {
+                        quizTotal ++;
+                        if (part.completed == 1) {
+                          quizCompleted ++;
+                        }
                       }
-
-                    }
-                  
                   }
                   })
-
-                  
+                  let exOut=Math.round(exCompleted * 100 /exTotal);
                     tb += '<td>' + Math.round(percentUnits / units) + '</td>';
-                    tb += '<td>' + exCompleted * 100 /exTotal + '</td>';
-                    tb += '<td>' + (quizCompleted) * 100 /totalQuiz + '</td>';
+                    tb += '<td>' + (isNaN(exOut)? '0':exOut) + '</td>';
+                    tb += '<td>' + Math.round((quizCompleted * 100 / quizTotal)) + '</td>';
                     tb += '<td>' + Math.round(completedReads * 100 / totalReads) + '</td>';
                     tb += '</tr>';
-
-
-                  /* const unitIntroduction = userCourseProgress.units['01-introduction'];
-                  const unitVariables = userCourseProgress.units['02-variables-and-data-types'];
-                  const unitUx = userCourseProgress.units['03-ux-design'];
-
-                  const resultadoExecises = unitVariables.parts['06-exercises'].completed;
-                  const resultadoQuiz = unitIntroduction.parts['04-quiz'].completed + unitVariables.parts['05-quiz'].completed + unitUx.parts['03-quiz'].completed;
-                  const resultadoLecturas = unitIntroduction.parts['00-welcome-and-orientation'].completed + unitIntroduction.parts['01-growth-mindset'].completed + unitIntroduction.parts['02-why-learn-to-code'].completed + unitIntroduction.parts['03-your-first-website'].completed + unitVariables.parts['00-values-data-types-and-operators'].completed + unitVariables.parts['01-variables'].completed + unitVariables.parts['02-self-learning-MDN'].completed + unitVariables.parts['03-comments'].completed + unitUx.parts['00-development-team'].completed + unitUx.parts['01-ux-design'].completed + unitUx.parts['02-ux-design-vs-ui-design'].completed;
-
-                  if (userCourseProgress.hasOwnProperty('percent')) {
-                    tb += '<td>' + userCourseProgress.percent + '</td>';
-                    tb += '<td>' + resultadoExecises * 100 + '</td>';
-                    tb += '<td>' + parseInt(resultadoQuiz * 100 / 3) + '</td>';
-                    tb += '<td>' + parseInt(resultadoLecturas * 100 / 11) + '</td>';
-                    tb += '</tr>';
-                  } */
-                } else {
-                  tb += '<td>Deserto</td>';
-                  tb += '<td>Deserto</td>';
-                  tb += '<td>Deserto</td>';
-                  tb += '<td>Deserto</td>';
+                } else{
+                  tb += '<td>'+ 0 + '</td>';
+                  tb += '<td>'+ 0+'</td>';
+                  tb += '<td>'+ 0 + '</td>';
+                  tb += '<td>'+ 0 + '</td>';
                   tb += '</tr>';
                 }
               }
@@ -150,3 +128,10 @@ cohort.addEventListener('change', () => {
         })
     })
 })
+
+// filterUser.addEventListener('keyup', () => {
+//   
+//     }
+//    return usersFilter;
+// })
+
