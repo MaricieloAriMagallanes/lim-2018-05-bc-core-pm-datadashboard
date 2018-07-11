@@ -34,7 +34,7 @@
           </span>
           <span class="item">
               <h3>
-                <span>DATOS GENERALES</span>
+                <span>BUSQUEDA DE DATOS</span>
               </h3>
           </span>
           <div class="signOff">   
@@ -69,13 +69,10 @@
     <!--Aqui finaliza-->
     <div class="informationContainer">
       <div class="dataDashboardGeneral">
-    <div id="header">
-      Busqueda de Datos
-    </div>
+    <div>
      <span class="cntInput">
        <label for>Centro:</label>
      </span>
->>>>>>> 6847b7f64a05fb28e67fe7db3a4c6b6699788a23
       <select class="tabla" id="sede" >
           <option value="" disabled selected hidden>Escoge tu sede</option>
           <option value="lim">Lima</option>
@@ -88,13 +85,12 @@
         <label for>Grupos:</label>
       </span>
       <select class="tabla" id="cohort">
-      </select>    
-
-        <input type="text" id="orderByFilter" placeholder="Search for names.." >
+      </select> 
+    </div>
+      <label> Busqueda por Nombre:</label>   
+      <input class="search1" id="boxSearch" type="search" placeholder="Buscar...">
         <table class="list" id="name"></table> 
-        <section id="listStudents" class="listStudents"></section>
-    </div></div>
-    <!--Aqui-->
+    <!--Aqui <input class="search1" id="boxSearch" type="search" placeholder="Buscar...">-->
  <div id="users">
     </div>
     
@@ -122,6 +118,7 @@
       <span class="titulo-hover">Seguir</span>
     </a>
      </div>
+     <script src="logueo.html"></script>
      <script src="data.js"></script>
      <script src="main.js"></script>
   </body>
