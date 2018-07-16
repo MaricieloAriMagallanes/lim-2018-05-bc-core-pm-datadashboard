@@ -1,4 +1,3 @@
-//Función y condiciones para usuario y contraseña de inicio.html
 function validar() {
   var usuario = document.getElementById("usuario").value;
   var contraseña = document.getElementById("contraseña").value;
@@ -10,144 +9,172 @@ function validar() {
     alert("Usuario y/o contraseña inválidos. Por favor verifique sus datos.");
   }
 }
-//Declaracion de variables
-const sede = document.getElementById("sede");
-const year = document.getElementById("year");
-const cohort = document.getElementById("cohort");
-const users = document.getElementById('name');
-const searchUser = document.getElementById('boxSearch');
-let userId = '';
-let userName = '';
-let cmb='';
-//Realizamos la tabla // tb=tabla
-let tb = '';
-tb += '<tr>';
-tb += '<th> Nombres"</th>';
-tb += '<th> % General </th>';
-tb += '<th> % Ejercicios</th>';
-tb += '<th> % Quizzes</th>';
-tb += '<th> % Lecturas </th>';
-tb += '</tr>' 
-//Realizamos los fetchs
-sede.addEventListener("change", () => {
-  fetch('../data/cohorts.json')
-    .then((cohorts) => cohorts.json())
-    .then((myDataCohorts) => {
-      cmb= '' ;
-      myDataCohorts.forEach(users => {
-        const cohortsIds = users.id;
-        const splitCohort = cohortsIds.split('-');
-        if (splitCohort[0] === sede.value) {
-        cmb += '<option value="' + cohortsIds + '">' + cohortsIds + '</option>';
-        }
-      });
-      cohort.innerHTML = cmb;
-    })
-})
 
-const options = {cohort:{},cohortData:{users: [],progress: []},orderBy:"",orderDirection:"",search:""};
-//
-cohort.addEventListener('change', () => {
-  fetch('../data/cohorts/' + cohort.value + '/users.json')
-    .then((response) => response.json())
-    .then((myUsers) => {
-      fetch('../data/cohorts/' + cohort.value + '/progress.json')
-        .then((response) => response.json())
-        .then((myDataProgress) => {
-          options.cohortData.users = myUsers;
-          options.cohortData.progress = myDataProgress;
-          //console.log(users);
-          //const usersWithStats = processCohortData(options);
-          // const usersWithStats = computeUserStats(myUsers, myDataProgress, courses
-          for(let value of myUsers) {  // for (let value of myUsers)|
-            if (value.role === "student") { // if (value.role .... )
-              tb += '<td id= "nombrestabla">' + value.name + '</td>';
-              //console.log(value.name);
-              const nameuser=value.name;
-              if (myDataProgress.hasOwnProperty(value.id)) {
-                const progressUser = myDataProgress[value.id];
-                let course = 'intro';
-                if (progressUser.hasOwnProperty(course)) {
-                  const userCourseProgress = progressUser[course];
-                  //console.log(userCourseProgress);
+const cohortsLink = '../data/cohorts.json';
+const usersLink = '../data/cohorts/lim-2018-03-pre-core-pw/users.json';
+const progressLink = '../data/cohorts/lim-2018-03-pre-core-pw/progress.json';
 
-                  let percentUnits = 0;
-                  let units = 0;
-                  let parts=0;
-                  let totalReads = 0;
-                  let exTotal = 0;
-                  let exCompleted = 0;
-                  let completedReads = 0;
-                  let quizTotal =0;
-                  let quizCompleted=0;
-                  let userStats = {percent:0};
-                  
-                  Object.values(userCourseProgress.units).forEach((unit) => {
-                    //console.log(unit.percent);
-                    percentUnits += unit.percent;
-                    units++;
-                    // for (let part of Object.values(unit.parts)) {                    
-                    for (let part of Object.values(unit.parts)){
-                      //console.log(part);
-                      if (part.type === 'read') { 
-                        totalReads++;
-                        
-                        if (part.completed === 1){
-                          completedReads++;
-                        }                      
-                      }                   
-                      if (part.hasOwnProperty('exercises')) {
-                        for (let ex of Object.values(part.exercises)){
-                          exTotal++;
-                        exCompleted = exCompleted + ex.completed
-                          //exCompleted += ex.completed
-                          //exTotal ++;
-                        // console.log(exTotal)
-                        }
-                      }
-                      if (part.type === 'quiz') {
-                        quizTotal ++;
-                        if (part.completed === 1) {
-                          quizCompleted ++;
-                        }
-                      }
-                  }
-                  })
-                  userStats.percent = percentUnits;
-                  //console.log(userStats);
-                  let exOut=Math.round(exCompleted * 100 /exTotal);
-                    tb += '<td>' + Math.round(percentUnits / units) + '</td>';
-                    tb += '<td>' + (isNaN(exOut)? '0':exOut) + '</td>';
-                    tb += '<td>' + Math.round((quizCompleted * 100 / quizTotal)) + '</td>';
-                    tb += '<td>' + Math.round(completedReads * 100 / totalReads) + '</td>';
-                    tb += '</tr>';
-                } else{
-                  tb += '<td>'+ 0 + '</td>';
-                  tb += '<td>'+ 0+'</td>';
-                  tb += '<td>'+ 0 + '</td>';
-                  tb += '<td>'+ 0 + '</td>';
-                  tb += '</tr>';
-                }
-              }
-            }
-          }
-     //NOTA: FALTAN 2 CAMPOS EN LA TABLA 
-          users.innerHTML = tb
-          //console.log(tb);
+let  options = {
+  cohort: [],
+  cohortData: {
+    users: [],
+    progress: {}
+  },
+  orderBy: "",
+  orderDirection: "",
+  search: ""
+};
+
+window.usersWithStats = []
+const getData = (callData) => {
+  fetch(usersLink)
+    .then((responseUser) => {
+      fetch(progressLink)
+        .then((responseProgress) => {
+          fetch(cohortsLink)
+            .then((responseCohort) => {
+              Promise.all([responseUser.json(), responseProgress.json(), responseCohort.json()])
+                .then(dataArray => {
+                  [window.users, window.progress, window.cohorts] = dataArray; 
+                  callData(users, progress, cohorts);
+                })
+            })
         })
     })
-    //Realizamos el filter
-searchUser.addEventListener('keyup', (event) => {
-  //console.log(options);
-  options.search = event.target.value;
+}
+const callGetData = (users, progress, cohorts) => {
+  cohortChose(cohorts);
+
+  const cohort = cohorts.find(item => item.id === 'lim-2018-03-pre-core-pw');
+  const courses = Object.keys(cohort.coursesIndex);
+  window.usersWithStats = computeUsersStats(users, progress, courses)
+}
+
+getData(callGetData); // promise.all de los fetch con datos
+
+let combo1 = document.getElementById('cedeCombo'); // JS y HTML
+combo1.length = 0;
+let defaultCede = document.createElement('option'); //define la opcion por defecto
+defaultCede.text = 'Selecciona una sede';
+combo1.add(defaultCede);
+combo1.selectedIndex = 0;
+
+const cedeSelector = (optionC) => { // combo para seleccionar 
+  let cede = [
+    { value: "lim", text: "Lima" },
+    { value: "scl", text: "Santiago" },
+    { value: "cdm", text: "Ciudad de México" },
+    { value: "spl", text: "Sao Paulo" }
+  ];
+
+  cede.forEach(item => {
+    optionC = document.createElement('option');
+    optionC.text = item.text;
+    optionC.value = item.value;
+    combo1.add(optionC);
+  })
+};
+cedeSelector(combo1);
+
+let combo = document.getElementById('cohortsCombo'); //Asociando JS y HTML
+
+const cohortChose = (cohort) => {
+  combo.length = 0;
+  let defaultOption = document.createElement('option'); //Definiendo el option por defecto
+  defaultOption.text = 'Selecciona el Grupo';
   
-  //console.log(options.cohortData.users);
-  //console.log(options.search);
-  //console.log(options);
-  //console.log(event.target.value);
-  usersFilter = processCohortData(options);
-  //let usersFilter = filterUsers(options.cohortData.users, event.target.value);
-   console.log(usersFilter)
-   
-})
-})
+  combo.add(defaultOption);
+  combo.selectedIndex = 0;
+
+  for (let i = 0; i < cohort.length; i++) {
+    option = document.createElement('option');
+    option.text = cohort[i].id;
+    option.value = cohort[i].id;
+    combo.add(option);
+  }
+}
+//FIN DROPDOWN COHORTS
+
+cedeOnChange = () => {
+  let cohortFilter = window.cohorts.filter(item => (item.id.slice(0, 3) == combo1.value));
+  cohortChose(cohortFilter);
+}
+
+//PINTA USUARIOS DE LIM PRECORE 2018
+function dataUsers() { //Detecta cohort de preadmisión y pinta sus users en el HTML
+  let lim = document.getElementById('cohortsCombo').value;
+  if (lim === "lim-2018-03-pre-core-pw") {
+     
+    let tableCont = document.createElement('div');
+    tableCont.classList = "contenedortable"
+    tableCont.id = "contenedor"
+    let tb = document.createElement('table');
+    tb.classList = "tb";
+    let tHead = document.createElement('tr');
+    tHead.classList = "tHead";
+    tHead.innerHTML += '<th>Alumnas</th><th>%Completitud general</th><th>%Ejercicios</th><th>%Lecturas<th>% Quizzes</th>';
+    tb.appendChild(tHead);
+
+    window.usersWithStats.forEach(user => {
+      // console.log(user);
+      let tbRow = document.createElement('tr');
+      tbRow.innerHTML += '<td>' + user.name + '</td>';
+      tbRow.innerHTML += '<td>' + user.stats.percent + '</td>';
+      tbRow.innerHTML += '<td>' + user.stats.exercises.percent + '</td>';
+      tbRow.innerHTML += '<td>' + user.stats.reads.percent + '</td>';
+      tbRow.innerHTML += '<td>' + user.stats.quizzes.percent + '</td>';
+      tb.appendChild(tbRow);
+
+    })
+
+    tableCont.appendChild(tb);
+    six.appendChild(tableCont);
+
+  }
+
+}
+//Aqui comienza el filter
+// Aqui declaramos variables para el filter
+  const searchUser = document.getElementById("boxSearch");
+  const studentsOrderBy = document.getElementById('orderBy');
+  const studentsOrderDirection = document.getElementById('orderDirection');
+
+  searchUser.addEventListener('keyup', (event) => {
+    //carga nuevamente la data de usuarios cada vez que se teclea
+    let dataUsuarios = computeUsersStats(window.users, window.progress, window.cohorts);
+    mostrarVista(dataUsuarios);
+    
+  });
+
+// Aqui empieza en ordenar por ... en direccion a ....
+function ordenar(){
+  //envia el array generado actualmente
+  let dataUsuarios = window.usersWithStats;
+  mostrarVista(dataUsuarios);
+
+}
+
+//arma la tabla, recibe el array de usuarios
+function mostrarVista(dataUsuarios){
+
+  let criterio = searchUser.value;  
+  let orderBy = studentsOrderBy.value;
+  let direction = studentsOrderDirection.value;
+
+    //reasigna el objeto options con los nuevos valores
+    options.cohort = window.cohorts;
+    options.cohortData.users = dataUsuarios;
+    options.cohortData.progress = window.progress;
+    options.orderBy = orderBy;
+    options.orderDirection = direction;
+    options.search = criterio;
+    
+    //reasigna el valor del array usuarios
+    window.usersWithStats = processCohortData(options);
+    var el = document.getElementById('contenedor');
+    el.remove();
+    dataUsers();
+
+}
+
+
