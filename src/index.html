@@ -1,127 +1,121 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Data Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-      <!--nav-left-->
-      <div class="column">
-      <div class="leftBar">
-        <div class="logoContainer">
-         <!-- <img src="img/logo.png" alt="" class="menu">-->
-          <img class="logo" src="img/logo.png">
-        </div>
-        <hr class="line">
-        <div class="leftNavBar">
-          <div class="userInformation">
-            <div class="userImg">
-              <img class="userImg" src="img/usuaria.png">
-            </div>
-            <div class="userData">
-              <h3>Alejandra Ramirez</h3>
-              <p>ale_laboratoria@gmail.com</p>
-            </div>
+
+<head>
+  <meta charset="utf-8">
+  <title>Data Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <!-- left-menu-->
+    <div class="column">
+        <div class="leftBar">
+          <div class="logoContainer">
+           <!-- <img src="img/logo.png" alt="" class="menu">-->
+            <img class="logo" src="img/logo.png">
           </div>
           <hr class="line">
-          <span class="itemImg">
-           <svg class="jss252 jss251" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19
-               5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3
-                1.34-3 3 1.34 3 3 3z"></path>
-            </svg>
-          </span>
-          <span class="item">
-              <h3>
-                <span>DATOS GENERALES</span>
-              </h3>
-          </span>
-          <div class="signOff">   
-            <hr class="line">
-            <div class="itemContainer">
-              <div class="itemImg">
-                <svg class="jss252 jss251" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                 <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 
-                   11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 
-                   1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z">
-                 </path>
-                </svg>
+          <div class="leftNavBar">
+            <div class="userInformation">
+              <div class="userImg">
+                <img class="userImg" src="img/usuaria.png">
               </div>
-              <div class="item">
+              <div class="userData">
+                <h3>Alejandra Ramirez</h3>
+                <p>ale_laboratoria@gmail.com</p>
+              </div>
+            </div>
+            <hr class="line">
+            <span class="itemImg">
+             <svg class="jss252 jss251" focusable="false" viewbox="0 0 24 24" aria-hidden="true">
+                <path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19
+                 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3
+                  1.34-3 3 1.34 3 3 3z"></path>
+              </svg>
+            </span>
+            <span class="item">
                 <h3>
-                  <span>CERRAR SESION</span>
+                  <span>BUSQUEDA DE DATOS</span>
                 </h3>
+            </span>
+            <div class="signOff">   
+              <hr class="line">
+              <div class="itemContainer">
+                <div class="itemImg">
+                  <svg class="jss252 jss251" focusable="false" viewbox="0 0 24 24" aria-hidden="true">
+                   <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 
+                     11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 
+                     1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z">
+                   </path>
+                  </svg>
+                </div>
+                <div class="item">
+                  <h3>
+                    <span>CERRAR SESION</span>
+                  </h3>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+<!--Aqui acaba el left-menu-->
+ <!--Recien puesto-->
+ <header class="tittleContainer">
+    <div class="tittle">
+    <h2>
+        <span>Data Dashboard</span>
+    </h2>      
     </div>
-    <!--Recien puesto-->
-    <header class="tittleContainer">
-      <div class="tittle">
-        <h2>
-          <span>Data Dashboard</span>
-        </h2>
-      </div>
-    </header>
-    <!--Aqui finaliza-->
-    <div class="informationContainer">
+  </header>
+  <!--Aqui finaliza-->
+  <div class="informationContainer">
       <div class="dataDashboardGeneral">
-    <div id="header">
-      Busqueda de Datos
-    </div>
-     <span class="cntInput">
-       <label for>Centro:</label>
-     </span>
-      <select class="tabla" id="sede" >
-          <option value="" disabled selected hidden>Escoge tu sede</option>
-          <option value="lim">Lima</option>
-          <option value="cdmx">Ciudad de México</option>
-          <option value="gdl">Guadalara</option>
-          <option value="scl">Santiago de Chile</option>
-          <option value="sp">Sao Paulo</option>
+    <div>
+     
+  <div class="cuerpo">
+    <div class="three">
+        <span class="cntInput">
+            <label for>Centro:</label>
+          </span>
+        <select id="cedeCombo" name="cedeCombo" onchange="cedeOnChange()"></select>
+        <label>Grupo:</label>
+      <select id="cohortsCombo" name="cohorts" onchange="dataUsers()">
       </select>
-      <span class="cntInput">
-        <label for>Grupos:</label>
-      </span>
-      <select class="tabla" id="cohort">
-      </select>    
-        <input type="text" id="orderByFilter" placeholder="Search for names.." >
-        <table class="list" id="name"></table> 
-        <section id="listStudents" class="listStudents"></section>
-    </div></div>
-    <!--Aqui-->
- <div id="users">
+      <label>Ordenado Por:</label>
+      <select class="tabla" id="orderBy">
+        <option value=""></option>
+        <option value="name">Nombre</option>
+        <option value="percent">% General</option>
+        <option value="porLecCom">% Lecturas Completadas</option>
+        <option value="ejeAuto">Ejercicios Autocorregidos</option>
+        <option value="porQuiz">% Quizzes</option>
+        
+      </select>
+      <label>Forma:</label>
+      <select class="tabla" id="orderDirection" >
+        <option value=""></option>
+        <option value="ASC">Ascendente</option>
+        <option value="DESC">Descendente</option>
+      </select>
+
+      <button id="btnOrdenar" name="btnOrdenar" onclick="ordenar()" >Ordenar</button>
+
+      <div>
+      <label>Buscar:</label>
+      <input class="search1" id="boxSearch" type="search" placeholder="Buscar..."> </div>
     </div>
-    
-    <div class="contenedor-redes-sociales">
-        <a class="facebook" href="https://www.facebook.com/" target="_blank">
-          <span class="circulo"><i class="fa fa-facebook"></i></span>
-          <span class="titulo">Facebook</span>
-          <span class="titulo-hover">Seguir</span>
-        </a>
- 
-     <a class="twitter" href="https://www.twitter.com/" target="_blank">
-       <span class="circulo"><i class="fa fa-twitter"></i></span>
-       <span class="titulo">Twitter</span>
-       <span class="titulo-hover">Seguir</span>
-     </a>
- 
-     <a class="gplus" href="https://plus.google.com/" target="_blank">
-       <span class="circulo"><i class="fa fa-google-plus"></i></span>
-       <span class="titulo">Google+</span>
-       <span class="titulo-hover">Seguir</span>
-     </a>
-     <a class="slack" href="https://claseslaboratoria.slack.com/messages/CAQLQ9Q8P/convo/CAQLQ9Q8P-1529536176.000382/" target="_blank">
-      <span class="circulo"><i class="fa fa-slack"></i></span>
-      <span class="titulo">#slack</span>
-      <span class="titulo-hover">Seguir</span>
-    </a>
-     </div>
-     <script src="logueo.html"></script>
-     <script src="data.js"></script>
-     <script src="main.js"></script>
-  </body>
+  </div>
+</div>
+    </div>
+    <div id="six">
+    </div>
+  </div>
+<script src="data.js"></script>
+<script src="main.js"></script>
+
+</body>
+
 </html>
